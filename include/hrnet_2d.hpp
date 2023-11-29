@@ -36,6 +36,8 @@ namespace hpe_core {
          * @return
          */
         tuple<vector<vector<Point2f>>, vector<vector<float>>> predict(const vector<Mat>& imgs) override;
+
+        HumanPose init_struct() override;
     };
 
 }

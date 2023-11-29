@@ -107,3 +107,66 @@ hpe_core::HRNet_2d::predict(const std::vector<cv::Mat> &imgs) {
 
     return {joint_ss, conf_ss};
 }
+
+hpe_core::HumanPose hpe_core::HRNet_2d::init_struct() {
+    HumanPose pose_struct;
+
+    pose_struct.body_connection = {
+            {1, 2}, {1, 3}, {2, 4}, {3, 5},
+            {1, 6}, {6, 8}, {8, 10},
+            {1, 7}, {7, 9}, {9, 11},
+            {6, 12}, {12, 14}, {14, 16},
+            {7, 13}, {13, 15}, {15, 17},
+            {17, 23}, {17, 21}, {17, 22},
+            {16, 20}, {16, 19}, {16, 18}
+    };
+
+    pose_struct.hand_connections = {
+            // right
+            {113, 114}, {114, 115}, {115, 116}, {116, 117},
+            {113, 118}, {118, 119}, {119, 120}, {120, 121},
+            {113, 122}, {122, 123}, {123, 124}, {124, 125},
+            {113, 126}, {126, 127}, {127, 128}, {128, 129},
+            {113, 130}, {130, 131}, {131, 132}, {132, 133},
+            // left
+            {92, 93}, {93, 94}, {94, 95}, {95, 96},
+            {92, 97}, {97, 98}, {98, 99}, {99, 100},
+            {92, 101}, {101, 102}, {102, 103}, {103, 104},
+            {92, 105}, {105, 106}, {106, 107}, {107, 108},
+            {92, 109}, {109, 110}, {110, 111}, {111, 112}
+    };
+
+    pose_struct.body_joint_desc = {
+            {1, "head"},
+            {2, "left_eye"}, {3, "right_eye"},
+            {4, "left_ear"}, {5, "right_ear"},
+            {6, "left_shoulder"}, {7, "right_shoulder"},
+            {8, "left_elbow"}, {9, "right_elbow"},
+            {10, "left_wrist"}, {11, "right_wrist"},
+            {12, "left_pelvis"}, {13, "right_pelvis"},
+            {14, "left_ankle"}, {15, "right_ankle"},
+            {16, "left_foot"}, {17, "right_foot"},
+            {20, "left_foot_bottom"}, {23, "right_foot_bottom"},
+            {18, "left_foot_toe"}, {21, "right_foot_toe"},
+            {19, "left_foot_little_toe"}, {22, "right_foot_little_toe"}
+    };
+
+    pose_struct.hand_joint_desc = {
+            // left
+            {92, "left_hand_wrist"},
+            {93, "left_thumb_0"}, {94, "left_thumb_1"}, {95, "left_thumb_2"}, {96, "left_thumb_3"},
+            {97, "left_index_0"}, {98, "left_index_1"}, {99, "left_index_2"}, {100, "left_index_3"},
+            {101, "left_middle_0"}, {102, "left_middle_1"}, {103, "left_middle_2"}, {104, "left_middle_3"},
+            {105, "left_ring_0"}, {106, "left_ring_1"}, {107, "left_ring_2"}, {108, "left_ring_3"},
+            {109, "left_pinky_0"}, {110, "left_pinky_1"}, {111, "left_pinky_2"}, {112, "left_pinky_3"},
+            // right
+            {113, "right_hand_wrist"},
+            {114, "right_thumb_0"}, {115, "right_thumb_1"}, {116, "right_thumb_2"}, {117, "right_thumb_3"},
+            {118, "right_index_0"}, {119, "right_index_1"}, {120, "right_index_2"}, {121, "right_index_3"},
+            {122, "right_middle_0"}, {123, "right_middle_1"}, {124, "right_middle_2"}, {125, "right_middle_3"},
+            {126, "right_ring_0"}, {127, "right_ring_1"}, {128, "right_ring_2"}, {129, "right_ring_3"},
+            {130, "right_pinky_0"}, {131, "right_pinky_1"},  {132, "right_pinky_2"}, {133, "right_pinky_3"}
+    };
+
+    return pose_struct;
+}

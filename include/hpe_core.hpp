@@ -4,6 +4,7 @@
 #include <vector>
 #include <tuple>
 #include <string>
+#include <map>
 
 
 namespace hpe_core {
@@ -11,6 +12,7 @@ namespace hpe_core {
     using std::vector;
     using std::tuple;
     using std::string;
+    using std::map;
 
     using cv::Point3f;
     using cv::Point2f;
@@ -21,17 +23,16 @@ namespace hpe_core {
      * body_joint_desc 和 hand_joint_desc
      */
     struct HumanPose {
-        // 人体和人手的关节点坐标
-        vector<Point3f> body_joints;
-        vector<Point3f> hand_joints;
+        // 全身的关节点位置
+        vector<Point3f> kps;
 
         // 人体和人手的关节点连接方式
         vector<tuple<int, int>> body_connection;
         vector<tuple<int, int>> hand_connections;
 
         // 人体和人手的关节点说明
-        vector<string> body_joint_desc;
-        vector<string> hand_joint_desc;
+        map<int, string> body_joint_desc;
+        map<int, string> hand_joint_desc;
     };
 
     /**
@@ -69,5 +70,13 @@ namespace hpe_core {
          * @return 多张图片中的姿态估计结果，以及结果的置信度
          */
         virtual tuple<vector<vector<Point2f>>, vector<vector<float>>> predict(const vector<Mat>& imgs) = 0;
+
+        /**
+         * @brief 初始化人体姿态数据体，按照所使用的姿态估计器的模型所使用的人体结构初始化人体结构体。包括 \n
+         * - body_connection, hand_connections 人体关节的连接方式 \n
+         * - body_joint_desc, hand_joint_desc 人体关节的名称
+         * @return 初始化之后的人体关节结构体
+         */
+        virtual HumanPose init_struct() = 0;
     };
 }
