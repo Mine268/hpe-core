@@ -48,4 +48,8 @@ namespace hpe_core {
 
         return points3d;
     }
+
+    Int_Single3dHPE::Int_Single3dHPE(Int_Single2dHPE *hpe_2d) : hpe_2d(hpe_2d) {
+        assert(hpe_2d != nullptr);
+    }
 }

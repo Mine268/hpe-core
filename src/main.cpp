@@ -4,7 +4,7 @@
 
 int main() {
 
-    hpe_core::HRNet_2d net {R"(D:/work\ARTest/model/hrnet.onnx)"};
+    hpe_core::HRNet_2d net {R"(../model/hrnet.onnx)"};
 
     auto img1 = cv::imread("../example/clean1.png");
     cv::Mat img2;

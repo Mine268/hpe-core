@@ -9,7 +9,7 @@ namespace hpe_core {
     /**
      * @brief 采用 COCO Wholebody 训练的 hrnet 进行关键点位置 2D 估计
      */
-    class HRNet_2d : Int_Single2dHPE {
+    class HRNet_2d : public virtual Int_Single2dHPE {
     private:
         /**
          * 模型 onnx 文件地址

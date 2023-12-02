@@ -79,4 +79,46 @@ namespace hpe_core {
          */
         virtual HumanPose init_struct() = 0;
     };
+
+
+    /**
+     * @brief 单人三维人体姿态估计接口
+     * @note 单人三维人体姿态估计需要组合单人二维姿态估计的接口，传入多视图图像，输出单人三维姿态
+     */
+    class Int_Single3dHPE {
+    public:
+        explicit Int_Single3dHPE(Int_Single2dHPE* hpe_2d);
+
+        /**
+         * @brief 估计单个的三维人体姿态，相机坐标系变换 rot * x + tran
+         * @param multiview_img 单帧多视图图像
+         * @param intrs 相机内参
+         * @param rots 相机旋转矩阵
+         * @param trans 相机平移向量
+         * @return 当前场景中的三维人体姿态
+         */
+        virtual HumanPose predict(
+                const vector<Mat>& multiview_img,
+                const vector<Mat>& intrs,
+                const vector<Mat>& rots,
+                const vector<Mat>& trans
+                ) = 0;
+        /**
+         * @brief 估计单个的三维人体姿态，相机坐标系变换 rot * x + tran
+         * @param multiview_imgs 一组多视图图像
+         * @param batch_intrs 相机内参
+         * @param batch_rots 相机旋转矩阵
+         * @param batch_trans 相机平移向量
+         * @return 一组三维人体姿态
+         */
+        virtual vector<HumanPose> predict(
+                const vector<vector<Mat>>& multiview_imgs,
+                const vector<Mat>& batch_intrs,
+                const vector<Mat>& batch_rots,
+                const vector<Mat>& batch_trans
+                ) = 0;
+
+    protected:
+        Int_Single2dHPE* hpe_2d;
+    };
 }
