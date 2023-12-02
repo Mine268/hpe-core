@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
 
-# TODO
-set(OpenCV_DIR "E:/opencv-4.8.0/")
-
 project(hpe_core)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_BUILD_TYPE Debug)
