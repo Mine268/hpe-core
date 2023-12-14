@@ -100,8 +100,8 @@ hpe_core::HRNet_2d::predict(const std::vector<cv::Mat> &imgs) {
             pos_ixs[2] = static_cast<int>(joint_ss[bx][jx].y);
             pos_ixs[3] = static_cast<int>(joint_ss[bx][jx].x);
             conf.push_back(pred_hms.at<float>(pos_ixs));
-            joint_ss[bx][jx].y *= static_cast<float>(imgs[0].size[0]) / static_cast<float>(pred_hms.size[2]);
-            joint_ss[bx][jx].x *= static_cast<float>(imgs[0].size[1]) / static_cast<float>(pred_hms.size[3]);
+            joint_ss[bx][jx].y *= static_cast<float>(imgs[bx].size[0]) / static_cast<float>(pred_hms.size[2]);
+            joint_ss[bx][jx].x *= static_cast<float>(imgs[bx].size[1]) / static_cast<float>(pred_hms.size[3]);
         }
     }
 

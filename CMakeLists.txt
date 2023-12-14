@@ -17,6 +17,13 @@ add_library(hpe_core
 )
 target_link_libraries(hpe_core PRIVATE ${OpenCV_LIBS})
 
+# 同步捕捉
+add_library(sync_cap_core
+        "src/sync_cap_core.cpp" # 同步捕捉
+        "src/opencv_cap.cpp" # opencv的摄像头捕捉
+)
+target_link_libraries(sync_cap_core PRIVATE ${OpenCV_LIBS}})
+
 # 便于调试用的 main
 add_executable(hpe_main "src/main.cpp")
 target_link_libraries(hpe_main PRIVATE hpe_core ${OpenCV_LIBS})

@@ -18,9 +18,9 @@ namespace hpe_core {
 
         vector<HumanPose> predict(
                 const vector<vector<Mat>> &multiview_imgs,
-                const vector<Mat> &batch_intrs,
-                const vector<Mat> &batch_rots,
-                const vector<Mat> &batch_trans
+                const vector<vector<Mat>> &batch_intrs,
+                const vector<vector<Mat>> &batch_rots,
+                const vector<vector<Mat>> &batch_trans
         ) override;
     };
 

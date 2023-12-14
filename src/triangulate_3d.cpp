@@ -9,6 +9,10 @@ hpe_core::HumanPose hpe_core::Triangulator::predict(
         const vector<Mat> &rots,
         const vector<Mat> &trans
 ) {
+    CV_Assert(multiview_img.size() == intrs.size() &&
+              multiview_img.size() == rots.size() &&
+              multiview_img.size() == trans.size());
+
     auto [multiview_pose2d, multiview_conf] = this->hpe_2d->predict(multiview_img);
     auto pose_struct = this->hpe_2d->init_struct();
     auto pose3d = triangulatePoints(multiview_pose2d, intrs, rots, trans);
@@ -18,19 +22,19 @@ hpe_core::HumanPose hpe_core::Triangulator::predict(
 }
 
 std::vector<hpe_core::HumanPose>
-hpe_core::Triangulator::predict(const std::vector<std::vector<cv::Mat>> &multiview_imgs,
-                                const std::vector<cv::Mat> &batch_intrs,
-                                const std::vector<cv::Mat> &batch_rots,
-                                const std::vector<cv::Mat> &batch_trans) {
+hpe_core::Triangulator::predict(const vector<vector<Mat>> &multiview_imgs,
+                                const vector<vector<Mat>> &batch_intrs,
+                                const vector<vector<Mat>> &batch_rots,
+                                const vector<vector<Mat>> &batch_trans) {
     CV_Assert(multiview_imgs.size() == batch_intrs.size() &&
               multiview_imgs.size() == batch_rots.size() &&
               multiview_imgs.size() == batch_trans.size());
 
     vector<HumanPose> poses;
-    for (int i = 0; i < multiview_imgs.size(); ++i) {
-        auto [multiview_pose2d, multiview_conf] = this->hpe_2d->predict(multiview_imgs[i]);
+    for (int bx = 0; bx < multiview_imgs.size(); ++bx) {
+        auto [multiview_pose2d, multiview_conf] = this->hpe_2d->predict(multiview_imgs[bx]);
         auto pose_struct = this->hpe_2d->init_struct();
-        auto pose3d = triangulatePoints(multiview_pose2d, batch_intrs[i], batch_rots[i], batch_trans[i]);
+        auto pose3d = triangulatePoints(multiview_pose2d, batch_intrs[bx], batch_rots[bx], batch_trans[bx]);
         pose_struct.kps = std::move(pose3d);
         poses.push_back(pose_struct);
     }
